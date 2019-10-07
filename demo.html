@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>mwc-app-dialog test</title>
+  </head>
+  <body>
+    <style>
+      html {
+        --mdc-theme-primary: #424242;
+      }
+      body {
+        margin: 0;
+      }
+      #content {
+        height:100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      #content > mwc-button {
+        margin: 4px;
+      }
+    </style>
+
+    <mwc-app-dialog id="dialog"></mwc-app-dialog>
+    <div id="content">
+      <mwc-button unelevated onclick="confirm()">confirm</mwc-button>
+      <mwc-button unelevated onclick="choices()">choices</mwc-button>
+    </div>
+
+    <script type="module" src="/MwcAppDialog.js"></script>
+    <script>
+      /**
+       * Confirm
+       */
+      window.confirm = async () => {
+        try {
+          await dialog.confirm('', 'Are you sure ?')
+        } catch (e) {
+          alert('rejected')
+          return
+        }
+        // accepted
+        alert('accepted')
+      }
+
+      /**
+       * Choices
+       */
+      window.choices = async () => {
+        const choices = ['banana', 'apple', 'grapes']
+        let picked
+        try {
+          picked = await dialog.choices(choices)
+        } catch (e) {
+          alert('cancelled')
+          return
+        }
+        alert(`you've picked "${picked}"`)
+      }
+    </script>
+  </body>
+</html>
