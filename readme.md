@@ -1,6 +1,6 @@
 # mwc-app-dialog
 
-Unofficial material web components wrapper to manage a mwc-dialog in your application.
+Unofficial material web component wrapper to manage a mwc-dialog in your application.
 
 ## Usages
 
@@ -28,8 +28,13 @@ const dialog = ....getElementById('#dialog')
 ```javascript
 try {
   await dialog.confirm('Please confirm', 'Are you sure to perform this action ?')
+  // or (just title)
+  // await dialog.confirm('Are you sure to perform this action ?')
+  // or (ligther than title)
+  // await dialog.confirm('', 'Are you sure to perform this action ?')
 } catch (e) {
-  return // cancelled
+  // cancelled
+  return 
 }
 // accepted, continue the procedure
 ```
@@ -41,7 +46,8 @@ let fruit
 try {
   fruit = await dialog.choices(['banana', 'apple', 'grapes'])
 } catch (e) {
-  return // cancelled
+  // cancelled
+  return 
 }
 alert(`I see you like ${fruit}`)
 ```
