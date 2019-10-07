@@ -28,10 +28,12 @@
     <div id="content">
       <mwc-button unelevated onclick="confirm()">confirm</mwc-button>
       <mwc-button unelevated onclick="choices()">choices</mwc-button>
+      <mwc-button unelevated onclick="custom()">custom</mwc-button>
     </div>
 
     <script type="module" src="/MwcAppDialog.js"></script>
-    <script>
+    <script type="module">
+      import { html } from '/node_modules/lit-html/lit-html.js'
       /**
        * Confirm
        */
@@ -59,6 +61,24 @@
           return
         }
         alert(`you've picked "${picked}"`)
+      }
+
+      /**
+       * Custom
+       */
+      window.custom = async () => {
+        try {
+          await dialog.open('this is the title', html`
+          <form id="form">
+            <input type="text" name="foo" placeholder="type something...">
+          </form>
+          `, (dom) => {
+            alert(`you've typed "${dom.form.foo.value}"`)
+          })
+        } catch (e) {
+          alert('cancelled')
+          return
+        }
       }
     </script>
   </body>

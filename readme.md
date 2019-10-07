@@ -19,8 +19,8 @@ Then in your HTML
 and now using JavaScript
 
 ```javascript
-const dialog = ....getElementById('#dialog')
-// see below so see the features
+const dialog = ....getElementById('dialog')
+// see below to see the features
 ```
 
 ### confirm
@@ -39,6 +39,8 @@ try {
 // accepted, continue the procedure
 ```
 
+<img src="./images/confirm.PNG">
+
 ### choices
 
 ```javascript
@@ -51,6 +53,29 @@ try {
 }
 alert(`I see you like ${fruit}`)
 ```
+
+<img src="./images/choices.PNG">
+
+### Custom
+
+```javascript
+try {
+  await dialog.open('this is the title', html`
+    <form id="form">
+      <input type="text" name="foo" placeholder="type something...">
+    </form>
+    `,
+    (dom) => {
+      alert(`you've typed "${dom.form.foo.value}"`)
+    }
+  )
+} catch (e) {
+  // cancelled
+  return
+}
+```
+
+<img src="./images/custom.PNG">
 
 ## Installation
 
