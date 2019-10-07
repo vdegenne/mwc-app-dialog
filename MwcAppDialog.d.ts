@@ -6,7 +6,7 @@ export declare class MwcAppDialog extends LitElement {
     title: string;
     template: TemplateResult | string;
     noPrimaryAction: boolean;
-    onClose: (e: CustomEvent<any>) => void;
+    onClose?: Function;
     dialog: Dialog;
     content: HTMLDivElement;
     render(): TemplateResult;

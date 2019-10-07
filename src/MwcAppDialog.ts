@@ -14,8 +14,8 @@ export class MwcAppDialog extends LitElement {
   @property({ type: Boolean })
   noPrimaryAction = false
 
-  @property()
-  onClose = (e:CustomEvent) => {}
+  @property({ attribute: false })
+  onClose?: Function
 
   @query('#dialog')
   dialog!: Dialog
