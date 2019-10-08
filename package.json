@@ -1,6 +1,6 @@
 {
   "name": "mwc-app-dialog",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Unofficial material web component wrapper to manage a mwc-dialog in your application.",
   "author": "Valentin Degenne <vdegenne@gmail.com>",
   "license": "Apache-2.0",
@@ -10,11 +10,7 @@
     "type": "git",
     "url": "https://github.com/vdegenne/mwc-app-dialog"
   },
-  "keywords": [
-    "web component",
-    "material",
-    "dialog"
-  ],
+  "keywords": ["web component", "material", "dialog"],
   "dependencies": {
     "@material/mwc-button": "^0.9.1",
     "@material/mwc-dialog": "^0.9.1",
