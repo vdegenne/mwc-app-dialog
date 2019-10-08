@@ -27,11 +27,11 @@ const dialog = ....getElementById('dialog')
 
 ```javascript
 try {
-  await dialog.confirm('Please confirm', 'Are you sure to perform this action ?')
-  // or (just title)
-  // await dialog.confirm('Are you sure to perform this action ?')
-  // or (ligther than title)
-  // await dialog.confirm('', 'Are you sure to perform this action ?')
+  await dialog.confirm('', 'Are you sure to perform this action ?')
+  // or (with a title)
+  // await dialog.confirm('Please confirm', 'Are you sure ?')
+  // or (just the title)
+  // await dialog.confirm('Are you sure ?')
 } catch (e) {
   // cancelled
   return 
