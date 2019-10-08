@@ -2,11 +2,21 @@
   "compilerOptions": {
     "target": "es2017",
     "module": "es2015",
+    "lib": [
+      "es2017",
+      "dom",
+      "dom.iterable"
+    ],
+    "sourceMap": true,
+    "inlineSources": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "importHelpers": true,
     "moduleResolution": "node",
     "declaration": true,
     "composite": true,
     "rootDir": "src",
-    "outDir": ".",
+    "outDir": "./",
     "experimentalDecorators": true,
     "noImplicitAny": true,
     "strict": true

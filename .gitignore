@@ -1,2 +1,4 @@
 node_modules
 MwcAppDialog.js
+**/*.d.ts
+**/*.js.map

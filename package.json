@@ -10,11 +10,16 @@
     "type": "git",
     "url": "https://github.com/vdegenne/mwc-app-dialog"
   },
-  "keywords": ["web component", "material", "dialog"],
+  "keywords": [
+    "web component",
+    "material",
+    "dialog"
+  ],
   "dependencies": {
     "@material/mwc-button": "^0.9.1",
     "@material/mwc-dialog": "^0.9.1",
-    "lit-element": "^2.2.1"
+    "lit-element": "^2.2.1",
+    "tslib": "^1.10.0"
   },
   "devDependencies": {
     "es-dev-server": "^1.18.3"
