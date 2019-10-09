@@ -77,11 +77,18 @@
       window.custom = async () => {
         try {
           await dialog.open('this is the title', html`
-          <form id="form">
-            <input type="text" name="foo" placeholder="type something...">
+          <form id="form" @submit="${e => e.preventDefault()}">
+            <input type="text" id="foo" placeholder="type "universe" to pass the test" autofocus>
           </form>
           `, (dom) => {
-            alert(`you've typed "${dom.form.foo.value}"`)
+            const value = dom.form.foo.value
+            if (value !== 'universe') {
+              alert(`It's wrong ! You've typed "${value}" !`)
+              return -1
+            }
+            else {
+              alert('Nice done !')
+            }
           })
         } catch (e) {
           alert('cancelled')

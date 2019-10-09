@@ -31,7 +31,7 @@ export class MwcAppDialog extends LitElement {
 
   render() {
     return html`
-    <mwc-dialog id="dialog" title="${this.title}" @closed="${this.onClose}">
+    <mwc-dialog id="dialog" title="${this.title}" @closing  ="${this.onClose}">
       <div id="content">${this.template}</div>
       ${this._cancelButton ? html`
       <mwc-button slot="secondaryAction" dialogAction="cancel">${this.cancelText}</mwc-button>
@@ -81,9 +81,13 @@ export class MwcAppDialog extends LitElement {
       this._open(
         title,
         <TemplateResult>template,
-        (dom:HTMLElement, value:any) => {
+        async (dom:HTMLElement, value:any) => {
           if (onAccept) {
-            onAccept(dom, value)
+            const result = await onAccept(dom, value)
+            if (result === -1) {
+              this.dialog.open=true
+              // return
+            }
           }
           resolve({ dom, value })
         },
