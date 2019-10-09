@@ -26,6 +26,7 @@
 
     <mwc-app-dialog id="dialog"></mwc-app-dialog>
     <div id="content">
+      <mwc-button unelevated onclick="notice()">notice</mwc-button>
       <mwc-button unelevated onclick="confirm()">confirm</mwc-button>
       <mwc-button unelevated onclick="choices()">choices</mwc-button>
       <mwc-button unelevated onclick="custom()">custom</mwc-button>
@@ -34,6 +35,13 @@
     <script type="module" src="/MwcAppDialog.js"></script>
     <script type="module">
       import { html } from '/node_modules/lit-html/lit-html.js'
+
+      /**
+       * Notice
+       */
+      window.notice = async () => {
+        dialog.notice('In progress', 'This part of this website is still under construction, please try coming back later.')
+      }
       /**
        * Confirm
        */

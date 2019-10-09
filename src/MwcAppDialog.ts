@@ -11,8 +11,11 @@ export class MwcAppDialog extends LitElement {
   @property()
   template: TemplateResult|string = ''
 
-  @property({ type: Boolean })
-  noPrimaryAction = false
+  @property({ type: String })
+  acceptText = 'ok'
+
+  @property({ type: String })
+  cancelText = 'cancel'
 
   @property({ attribute: false })
   onClose?: Function
@@ -23,30 +26,36 @@ export class MwcAppDialog extends LitElement {
   @query('#content')
   content!: HTMLDivElement
 
+  _acceptButton = true
+  _cancelButton = true
+
   render() {
     return html`
     <mwc-dialog id="dialog" title="${this.title}" @closed="${this.onClose}">
       <div id="content">${this.template}</div>
-      <mwc-button slot="secondaryAction" dialogAction="cancel">cancel</mwc-button>
-      ${!this.noPrimaryAction
-        ? html`
-        <mwc-button unelevated slot="primaryAction" dialogAction="accept">ok</mwc-button>`
-        : null}
+      ${this._cancelButton ? html`
+      <mwc-button slot="secondaryAction" dialogAction="cancel">${this.cancelText}</mwc-button>
+      ` : null}
+      ${this._acceptButton ? html`
+      <mwc-button unelevated slot="primaryAction" dialogAction="accept">${this.acceptText}</mwc-button>` : null}
     </mwc-dialog>
     `
   }
 
-  async _open(title: string, template: TemplateResult|string, onAccept: Function, onCancel: Function, primaryAction: Boolean = true) {
+  async _open(title: string, template: TemplateResult|string, onAccept: Function, onCancel: Function, cancelButton: boolean = true, acceptButton: boolean = true) {
+    
     this.title = title && title[0].toUpperCase() + title.slice(1, title.length)
     this.template = template
-    this.noPrimaryAction = !primaryAction
+    this._acceptButton = acceptButton
+    this._cancelButton = cancelButton
     this.dialog.open = true
     await this.updateComplete
     
     this.content.querySelectorAll('[id]').forEach(el => {
       // @ts-ignore
       this.content[el.id] = el
-  })
+    })
+
     this.onClose = (e:CustomEvent) => {
       if ((e.detail.action === 'cancel' || e.detail.action === 'close') && onCancel) {
         onCancel()
@@ -55,21 +64,17 @@ export class MwcAppDialog extends LitElement {
       } else if (onAccept) {
         onAccept(this.content, e.detail.action)
       }
+
+      /* reinit the buttons */
+      this._acceptButton = true
+      this._cancelButton = true
     }
     return this.content
   }
 
-  open(title: string, template: TemplateResult | string, onAccept?: Function, onCancel?: Function, primaryAction: Boolean = true) {
+  open(title: string, template: TemplateResult|string, onAccept: Function, onCancel: Function|boolean = true) {
     if (typeof template === 'string') {
       template = html`${template}`
-    }
-    if (typeof onAccept === 'boolean') {
-      primaryAction = onAccept
-      onAccept = undefined
-    }
-    if (typeof onCancel === 'boolean') {
-      primaryAction = onCancel
-      onCancel = undefined
     }
 
     return new Promise((resolve, reject) => {
@@ -83,13 +88,20 @@ export class MwcAppDialog extends LitElement {
           resolve({ dom, value })
         },
         () => {
-          if (onCancel) {
+          if (typeof onCancel === 'function') {
             onCancel()
           }
           reject()
         },
-        primaryAction
+        typeof onCancel === 'boolean' ? onCancel : onCancel !== undefined,
+        onAccept !== undefined
       )
+    })
+  }
+
+  notice(title: string, template: TemplateResult | string) {
+    return new Promise((resolve, reject) => {
+      this._open(title, template, (dom: HTMLElement) => resolve(dom), reject, false, true)
     })
   }
 
@@ -99,7 +111,7 @@ export class MwcAppDialog extends LitElement {
     })
   }
 
-  choices(choices:Array<any>) {
+  choices(choices:Array<any>, title:string = 'Select one') {
     const template = html`
     <style>
       #content > mwc-button {
@@ -111,7 +123,7 @@ export class MwcAppDialog extends LitElement {
     `
 
     return new Promise<any>((resolve, reject) => {
-      this._open('select one', template, (_:HTMLElement, value:any) => resolve(value), reject, false)
+      this._open(title, template, (_:HTMLElement, value:any) => resolve(value), reject, true, false)
     })
   }
 }

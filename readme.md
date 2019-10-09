@@ -23,7 +23,26 @@ const dialog = ....getElementById('dialog')
 // see below to see the features
 ```
 
-### confirm
+### Notice
+
+<img src="./images/notice.PNG">
+
+```javascript
+dialog.notice('In progress', 'This part of this website is still under construction, please try coming back later.')
+```
+or blocking
+```javascript
+try {
+  await dialog.notice('In progress', 'This part of this website is still under construction, please try coming back later.')
+} catch (e) {
+  // canceled
+  return
+}
+```
+
+### Confirm
+
+<img src="./images/confirm.PNG">
 
 ```javascript
 try {
@@ -39,9 +58,9 @@ try {
 // accepted, continue the procedure
 ```
 
-<img src="./images/confirm.PNG">
+### Choices
 
-### choices
+<img src="./images/choices.PNG">
 
 ```javascript
 let fruit
@@ -54,9 +73,9 @@ try {
 alert(`I see you like ${fruit}`)
 ```
 
-<img src="./images/choices.PNG">
-
 ### Custom
+
+<img src="./images/custom.PNG">
 
 ```javascript
 try {
@@ -75,7 +94,6 @@ try {
 }
 ```
 
-<img src="./images/custom.PNG">
 
 ## Installation
 
