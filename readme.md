@@ -94,6 +94,19 @@ try {
 }
 ```
 
+### Catch Dom
+
+You can also catch the dom (rendered content of the dialog) to make post-manipulation :
+
+```javascript
+try {
+  const dom = await dialog.open('title', html`<p id=myparagraph>hello I am red</p>`, onAccept, onCancel)
+  dom.myparagraph.style.color = 'red'
+} catch (e) {
+  return
+}
+```
+
 
 ## Installation
 

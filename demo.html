@@ -30,6 +30,7 @@
       <mwc-button unelevated onclick="confirm()">confirm</mwc-button>
       <mwc-button unelevated onclick="choices()">choices</mwc-button>
       <mwc-button unelevated onclick="custom()">custom</mwc-button>
+      <mwc-button unelevated onclick="catchDom()">catch dom</mwc-button>
     </div>
 
     <script type="module" src="/MwcAppDialog.js"></script>
@@ -75,25 +76,41 @@
        * Custom
        */
       window.custom = async () => {
-        try {
-          await dialog.open('this is the title', html`
+        dialog.open('Universe', html`
           <form id="form" @submit="${e => e.preventDefault()}">
-            <input type="text" id="foo" placeholder="type "universe" to pass the test" autofocus>
+            <input type="text" id="foo" placeholder="type 'universe' to pass the test" autofocus autocomplete="off" style="width:100%;box-sizing:border-box">
           </form>
-          `, (dom) => {
-            const value = dom.form.foo.value
-            if (value !== 'universe') {
-              alert(`It's wrong ! You've typed "${value}" !`)
-              return -1
-            }
-            else {
-              alert('Nice done !')
-            }
-          })
-        } catch (e) {
+        `,
+        (dom) => {
+          const value = dom.form.foo.value
+          if (value !== 'universe') {
+            alert(`It's wrong ! You've typed "${value}" !`)
+            return -1
+          }
+          else {
+            alert('Nice done !')
+            return
+          }
+        },
+        () => {
           alert('cancelled')
           return
-        }
+        })
+      }
+
+      /**
+       * Catch the Dom
+       */
+      window.catchDom = async () => {
+        const dom = await dialog.open('Catch the Dom', html`
+        <p id=customContent>This is the custom content and it should be red from the post dom manipulation</p>
+        `, (dom) => {
+          alert('accepted')
+        }, () => {
+          alert('dismissed')
+        })
+
+        dom.customContent.style.color = 'red'
       }
     </script>
   </body>
