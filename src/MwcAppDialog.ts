@@ -72,6 +72,10 @@ export class MwcAppDialog extends LitElement {
     return this.content
   }
 
+  close() {
+    this.dialog.open = false
+  }
+
   open(title: string, template: TemplateResult|string, onAccept: Function, onCancel: Function|boolean = true) {
     if (typeof template === 'string') {
       template = html`${template}`
