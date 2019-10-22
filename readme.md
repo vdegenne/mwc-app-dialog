@@ -32,12 +32,8 @@ dialog.notice('In progress', 'This part of this website is still under construct
 ```
 or blocking
 ```javascript
-try {
-  await dialog.notice('In progress', 'This part of this website is still under construction, please try coming back later.')
-} catch (e) {
-  // canceled
-  return
-}
+await dialog.notice('In progress', 'This part of this website is still under construction, please try coming back later.')
+console.log('you just closed the dialog')
 ```
 
 ### Confirm
@@ -78,35 +74,47 @@ alert(`I see you like ${fruit}`)
 <img src="./images/custom.PNG">
 
 ```javascript
-try {
-  await dialog.open('this is the title', html`
-    <form id="form">
-      <input type="text" name="foo" placeholder="type something...">
-    </form>
-    `,
-    (dom) => {
-      alert(`you've typed "${dom.form.foo.value}"`)
-    }
-  )
-} catch (e) {
-  // cancelled
-  return
-}
+await dialog.open('this is the title', html`
+  <form id="form">
+    <input type="text" name="foo" placeholder="type something...">
+  </form>
+  `,
+  (dom) => {
+    alert(`You've typed "${dom.form.foo.value}"`)
+  },
+  () => {
+    alert('cancelled')
+  }
+)
 ```
 
-### Catch Dom
+If you want a custom function without an accept button, just pass `undefined` instead of a function for the third argument :
+```javascript
+await dialog.open('title', html`<p>test</p>`, undefined, onCancel) // only cancellable
+```
+
+## Other features
+
+### catch dom
 
 You can also catch the dom (rendered content of the dialog) to make post-manipulation :
 
 ```javascript
-try {
-  const dom = await dialog.open('title', html`<p id=myparagraph>hello I am red</p>`, onAccept, onCancel)
-  dom.myparagraph.style.color = 'red'
-} catch (e) {
-  return
-}
+const dom = await dialog.open('title', html`<p id=myparagraph>hello I am red</p>`, onAccept, onCancel)dom.myparagraph.style.color = 'red'
 ```
 
+### make your own selection dialog (`dialogAction`)
+
+```javascript
+await dialog.open('select one', html`
+  <span dialogAction="first">first</span>
+  <span dialogAction="second">second</span>
+  `,
+  (dom, choice) => {
+    console.log(`You choosed ${choice} !`)
+  }
+)
+```
 
 ## Installation
 

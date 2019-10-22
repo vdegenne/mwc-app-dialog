@@ -4,7 +4,7 @@
 
 - added `close` function to the element.
 
-## [0.1.5] - 2019-10-22
+## [0.1.6] - 2019-10-22
 
 - added **catch dom** feature (see `README.md`)
 - fix typescript `onAccept` possibly undefined in the `open` function.
