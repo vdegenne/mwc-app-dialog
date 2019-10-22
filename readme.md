@@ -103,7 +103,7 @@ await dialog.open('title', html`<input type="text" id="myinput">`, (dom) => {
 })
 ```
 
-If you want a custom function without an accept button, just pass `undefined` instead of a function for the third argument :
+If you want a custom content without an accept button, just pass `undefined` instead of a function for the third argument :
 
 ```javascript
 await dialog.open('title', html`<p>test</p>`, undefined, onCancel) // only cancellable
@@ -116,7 +116,8 @@ await dialog.open('title', html`<p>test</p>`, undefined, onCancel) // only cance
 You can also catch the dom (rendered content of the dialog) to make post-manipulation :
 
 ```javascript
-const dom = await dialog.open('title', html`<p id=myparagraph>hello I am red</p>`, onAccept, onCancel)dom.myparagraph.style.color = 'red'
+const dom = await dialog.open('title', html`<p id=myparagraph>hello I am red</p>`, onAccept, onCancel)
+dom.myparagraph.style.color = 'red'
 ```
 
 ### make your own selection dialog (`dialogAction`)
