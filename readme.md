@@ -88,7 +88,23 @@ await dialog.open('this is the title', html`
 )
 ```
 
+If you want to prevent the dialog from closing (e.g. when you need to validate a form but it has an error the user needa fix) returns `-1` from the `onAccept` function.
+
+```javascript
+await dialog.open('title', html`<input type="text" id="myinput">`, (dom) => {
+  if (dom.myinput.value === '') {
+    alert('please enter a value')
+    return -1 // the dialog will stay open
+  }
+  else {
+    alert('thanks !')
+    // the dialog will close by default
+  }
+})
+```
+
 If you want a custom function without an accept button, just pass `undefined` instead of a function for the third argument :
+
 ```javascript
 await dialog.open('title', html`<p>test</p>`, undefined, onCancel) // only cancellable
 ```
