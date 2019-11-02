@@ -27,7 +27,7 @@ export class MwcAppDialog extends LitElement {
 
   protected _acceptButton = true
   protected _cancelButton = true
-  protected preventEscape = false
+  public preventEscape = false
 
   constructor () {
     super()

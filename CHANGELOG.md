@@ -9,6 +9,6 @@
 - added **catch dom** feature (see `README.md`)
 - fix typescript `onAccept` possibly undefined in the `open` function.
 
-## [0.1.7] - 2019-11-02
+## [0.1.8] - 2019-11-02
 
 - added **preventEscape** feature (see `demo.html`)
