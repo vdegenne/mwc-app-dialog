@@ -31,6 +31,7 @@
       <mwc-button unelevated onclick="choices()">choices</mwc-button>
       <mwc-button unelevated onclick="custom()">custom</mwc-button>
       <mwc-button unelevated onclick="catchDom()">catch dom</mwc-button>
+      <mwc-button unelevated onclick="preventEscape()">prevent ESC</mwc-button>
     </div>
 
     <script type="module" src="/MwcAppDialog.js"></script>
@@ -103,14 +104,32 @@
        */
       window.catchDom = async () => {
         const dom = await dialog.open('Catch the Dom', html`
-        <p id=customContent>This is the custom content and it should be red from the post dom manipulation</p>
-        `, (dom) => {
+          <p id=customContent>This is the custom content and it should be red from the post dom manipulation</p>
+        `,
+        (dom) => {
           alert('accepted')
-        }, () => {
+        },
+        () => {
           alert('dismissed')
         })
 
         dom.customContent.style.color = 'red'
+      }
+
+      /**
+       * Prevent closing on escape key press
+       */
+      window.preventEscape = async () => {
+        dialog.preventEscape = true
+        const dom = await dialog.open('Prevent Escape', html`
+          <p>This dialog shouldn't close when Escape key is pressed</p>
+        `,
+        (dom) => {
+          alert('closed from click')
+        },
+        () => {
+          alert('closed from click')
+        })
       }
     </script>
   </body>

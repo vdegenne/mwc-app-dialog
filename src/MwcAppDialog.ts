@@ -25,8 +25,20 @@ export class MwcAppDialog extends LitElement {
   @query('#content')
   content!: HTMLDivElement
 
-  _acceptButton = true
-  _cancelButton = true
+  protected _acceptButton = true
+  protected _cancelButton = true
+  protected preventEscape = false
+
+  constructor () {
+    super()
+    document.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && this.dialog.open) {
+        if (this.preventEscape) {
+          e.stopImmediatePropagation()
+        }
+      }
+    })
+  }
 
   render() {
     return html`
@@ -39,6 +51,10 @@ export class MwcAppDialog extends LitElement {
       <mwc-button unelevated slot="primaryAction" @click="${() => this.onClose()}">${this.acceptText}</mwc-button>` : null}
     </mwc-dialog>
     `
+  }
+
+  onKeyDown(e: KeyboardEvent) {
+    console.log('keydown')
   }
 
   async _open(title: string, template: TemplateResult|string, onAccept: Function, onCancel: Function, acceptButton: boolean = true, cancelButton: boolean = true) {
