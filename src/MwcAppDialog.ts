@@ -42,7 +42,7 @@ export class MwcAppDialog extends LitElement {
 
   render() {
     return html`
-    <mwc-dialog id="dialog" title="${this.title}" @closed="${(e:CustomEvent) => this.onClose(e)}">
+    <mwc-dialog id="dialog" heading="${this.title}" @closed="${(e:CustomEvent) => this.onClose(e)}">
       <div id="content">${this.template}</div>
       ${this._cancelButton ? html`
       <mwc-button slot="secondaryAction" dialogAction="cancel">${this.cancelText}</mwc-button>
